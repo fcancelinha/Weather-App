@@ -1,0 +1,79 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+<!-- testa git HUGO-->
+<!-- LISTEN TO ME SAMIR YOU'RE GOING TO BREAK THE FUCKING BEN CHODE-->
+    <ion-row>
+      <ion-col>
+        
+          <ion-searchbar  [(ngModel)]="this.searchTerm" (ionChange)="searchCity(this.searchTerm)"></ion-searchbar>
+
+          <ion-list *ngIf="this.items?.length; else noCity">
+            <ion-item *ngFor="let element of this.items">
+                {{element.name}}
+            </ion-item>
+
+          </ion-list>
+
+          <ng-template #noCity>
+              No city found with that name
+          </ng-template>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-card>
+      <ion-grid *ngIf="weatherData">
+
+        <ion-row>
+          <ion-col>
+            <img width="110" src="http://openweathermap.org/img/wn/{{weatherData.weather[0].icon}}@2x.png">
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <h1 text-center>{{weatherData.name}}, {{weatherData.sys.country}}  </h1>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col>
+            <h1>{{weatherData.weather[0].description}}</h1>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <h1>{{weatherData.main.temp}}°</h1>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <h1>MIN: </h1>
+          </ion-col>
+          <ion-col>
+            <h1>MAX: </h1>
+          </ion-col>
+        </ion-row>
+  
+        <ion-row>
+          <ion-col>
+            <h1>{{weatherData.main.temp_min}} °</h1>
+          </ion-col>
+          <ion-col>
+            <h1>{{weatherData.main.temp_max}} °</h1>
+          </ion-col>
+        </ion-row>
+  
+      </ion-grid>
+    </ion-card>
+
+
+
+
+
+ 
+  </div>
+</ion-content>

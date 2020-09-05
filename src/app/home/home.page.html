@@ -1,21 +1,33 @@
-<ion-content [fullscreen]="true">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Weather Project</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="false" class="ion-padding">
+  
+
+  <ion-row class="ion-text-center" style="z-index: 1000;">
+    <ion-col>
+         
+        <ion-toolbar>
+      <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="200" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
+    </ion-toolbar>
+      <ion-list *ngIf="this.cities">
+          <ion-item button (click)="searchWeather(city.name)" *ngFor="let city of cities">
+            {{ city.name }} , {{ city.country }}
+          </ion-item>
+      </ion-list>
+    
+    </ion-col>
+  </ion-row>
+
   <div id="container">
-
-    <ion-row>
-      <ion-col size="3">
-
-        <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="200" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)" placeholder="Search a city..."></ion-searchbar>
-
-        <ion-list *ngIf="this.cities">
-            <ion-item button (click)="searchWeather(city.name)" *ngFor="let city of cities">
-              {{ city.name }} , {{ city.country }}
-            </ion-item>
-        </ion-list>
-      
-      </ion-col>
-    </ion-row>
-
-
+       
     <ion-card size="3" *ngIf="weatherData">
 
         <ion-row>
@@ -62,10 +74,44 @@
   
     </ion-card>
 
-
-
-
-
- 
   </div>
+
+  
+  
 </ion-content>
+
+<ion-footer class="ion-text-center">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-icon name="rainy"></ion-icon>        
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-icon name="flash"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-icon name="sunny"></ion-icon>
+          </div>
+        </ion-col>
+      
+      <ion-col>
+        <div>
+          <ion-icon name="thunderstorm"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <ion-icon name="cloudy-night"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+
+  </ion-toolbar>
+</ion-footer>

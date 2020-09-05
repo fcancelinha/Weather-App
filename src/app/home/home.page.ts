@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherApiService } from '../shared/services/weather-api.service';
-import { CityHandler } from '../shared/models/city-handler';
-import { City } from '../shared/models/city';
-import { finalize } from 'rxjs/operators'
-import { Subscription, forkJoin, Observable } from 'rxjs';
+import { finalize, filter} from 'rxjs/operators'
+import { Subscription, Observable} from 'rxjs';
+import { CityApiService } from '../shared/services/city-api.service';
+import { ICity } from '../shared/models/ICity';
+import { City } from '../shared/models/City';
+import { KeyedWrite } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-home',
@@ -14,30 +17,58 @@ import { Subscription, forkJoin, Observable } from 'rxjs';
 export class HomePage implements OnInit {
 
   weatherData: any;
-  city: string = 'London';
-  searchTerm: string;
-  cityHandler: CityHandler;
-  items: City[];
+  cities: City[] = [];
+  city: string;
 
-  constructor(private weatherApi: WeatherApiService) {
-      this.cityHandler = new CityHandler();
-  }
+
+  constructor(private weatherApi: WeatherApiService, private cityApi: CityApiService ) {}
 
   ngOnInit() {
 
-    const weatherSub: Subscription =  this.weatherApi.getWeather(this.city).pipe(finalize(() => {
+  }
+  
+  
+  public searchWeather(cityName: string){
+    this.clearResult();
+
+    const weatherSub: Subscription =  this.weatherApi.getWeather(cityName).pipe(finalize(() => {
       if(weatherSub != null && !weatherSub.closed) {
         weatherSub.unsubscribe();
       }
-    })).subscribe(data =>{this.weatherData = data;})
+    })).subscribe(data =>{
+      this.weatherData = data;
+    })
+    
+  } 
 
-  }
+  public getFilteredCities(city: string){
+    this.clearResult();
     
-  searchCity(searchTerm: string){
-    
-    this.items = this.cityHandler.filterCities(searchTerm);
-       
+    const filteredCities: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
+      if(filteredCities != null && !filteredCities.closed) {
+        filteredCities.unsubscribe();
+      }
+    })).subscribe( cities => {
+
+      for(let i = 0; i < cities["records"].length ; i++){
+          this.cities.push(new City(cities["records"][i]["fields"]["name"], 
+                                    cities["records"][i]["fields"]["country"], 
+                                    cities["records"][i]["fields"]["country_code"]))
+      }
+
+    })
+  
   }
+
+
+  private clearResult(){
+    this.cities = []; 
+  }
+
+
+
+
+
 
 
 

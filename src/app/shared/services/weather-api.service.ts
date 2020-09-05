@@ -12,7 +12,6 @@ export class WeatherApiService {
 
 constructor(private httpClient : HttpClient) { }
 
-
 getWeather(cityName: string){
   return this.httpClient.get(this.url + encodeURIComponent(cityName) + "&units=metric" + "&appid=" + this.apiKey)
 }

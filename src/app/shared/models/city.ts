@@ -1,16 +1,15 @@
-export class City {
+import { ICity } from './ICity';
 
-    id: number;
+export class City implements ICity {
+
     name: string;
     country: string;
+    country_code: string;
 
-    constructor(id: number, name: string, country: string){
-
-        this.id = id;
+    constructor(name: string, country: string, country_code: string){
         this.name = name;
         this.country = country;
+        this.country_code = country_code;
     }
-
-
 
 }

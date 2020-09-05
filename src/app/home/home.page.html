@@ -1,29 +1,22 @@
 <ion-content [fullscreen]="true">
   <div id="container">
 
-<!-- testa git HUGO-->
-<!-- LISTEN TO ME SAMIR YOU'RE GOING TO BREAK THE FUCKING BEN CHODE-->
     <ion-row>
-      <ion-col>
-        
-          <ion-searchbar  [(ngModel)]="this.searchTerm" (ionChange)="searchCity(this.searchTerm)"></ion-searchbar>
+      <ion-col size="3">
 
-          <ion-list *ngIf="this.items?.length; else noCity">
-            <ion-item *ngFor="let element of this.items">
-                {{element.name}}
+        <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="200" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)" placeholder="Search a city..."></ion-searchbar>
+
+        <ion-list *ngIf="this.cities">
+            <ion-item button (click)="searchWeather(city.name)" *ngFor="let city of cities">
+              {{ city.name }} , {{ city.country }}
             </ion-item>
-
-          </ion-list>
-
-          <ng-template #noCity>
-              No city found with that name
-          </ng-template>
-
+        </ion-list>
+      
       </ion-col>
     </ion-row>
 
-    <ion-card>
-      <ion-grid *ngIf="weatherData">
+
+    <ion-card size="3" *ngIf="weatherData">
 
         <ion-row>
           <ion-col>
@@ -67,7 +60,6 @@
           </ion-col>
         </ion-row>
   
-      </ion-grid>
     </ion-card>
 
 

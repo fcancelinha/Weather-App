@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
+import { GeoDbFreeModule } from 'node_modules/wft-geodb-angular-client'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -17,7 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    GeoDbFreeModule.forRoot({
+      apiKey: null,
+      serviceUri: "http://geodb-free-service.wirefreethought.com"
+    })
   ],
   providers: [
     StatusBar,

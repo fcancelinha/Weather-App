@@ -29,29 +29,29 @@
 
   <div id="container">
        
-    <ion-card size="3" *ngIf="weatherData">
+    <ion-card size="3" *ngIf="weatherNow">
 
         <ion-row>
           <ion-col>
-            <img width="110" src="http://openweathermap.org/img/wn/{{weatherData.weather[0].icon}}@2x.png">
+            <img width="110" src="http://openweathermap.org/img/wn/{{weatherNow.weather[0].icon}}@2x.png">
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <h1 text-center>{{weatherData.name}}, {{weatherData.sys.country}}  </h1>
+            <h1 text-center>{{weatherNow.name}}, {{weatherNow.sys.country}}  </h1>
           </ion-col>
         </ion-row>
   
         <ion-row>
           <ion-col>
-            <h1>{{weatherData.weather[0].description}}</h1>
+            <h1>{{weatherNow.weather[0].description}}</h1>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <h1>{{weatherData.main.temp}}°</h1>
+            <h1>{{weatherNow.main.temp}}°</h1>
           </ion-col>
         </ion-row>
         
@@ -66,10 +66,10 @@
   
         <ion-row>
           <ion-col>
-            <h1>{{weatherData.main.temp_min}} °</h1>
+            <h1>{{weatherNow.main.temp_min}} °</h1>
           </ion-col>
           <ion-col>
-            <h1>{{weatherData.main.temp_max}} °</h1>
+            <h1>{{weatherNow.main.temp_max}} °</h1>
           </ion-col>
         </ion-row>
   
@@ -84,35 +84,14 @@
 <ion-footer class="ion-text-center">
   <ion-toolbar>
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <div>
-            <ion-icon name="rainy"></ion-icon>        
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <ion-icon name="flash"></ion-icon>
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <ion-icon name="sunny"></ion-icon>
-          </div>
-        </ion-col>
-      
-      <ion-col>
-        <div>
-          <ion-icon name="thunderstorm"></ion-icon>
-        </div>
-      </ion-col>
-      <ion-col>
-        <div>
-          <ion-icon name="cloudy-night"></ion-icon>
-        </div>
-      </ion-col>
-    </ion-row>
-    </ion-grid>
+      <ion-row *ngIf="weatherForecast">
+        <ion-col *ngFor="let forecast of weatherForecast">
+          {{forecast.day}}
+          <img width="110" src="http://openweathermap.org/img/wn/{{forecast.icon}}@2x.png">
+            {{forecast.temp}}°       
 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-footer>

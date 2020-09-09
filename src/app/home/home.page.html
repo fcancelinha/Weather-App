@@ -15,11 +15,12 @@
     <ion-col>
          
         <ion-toolbar>
-      <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="200" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
+      <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
     </ion-toolbar>
-      <ion-list *ngIf="this.cities">
-          <ion-item button (click)="searchWeather(city.name)" *ngFor="let city of cities">
-            {{ city.name }} , {{ city.country }}
+
+      <ion-list *ngIf="this.filteredCities">
+          <ion-item button text-center (click)="searchWeather(city.name)" *ngFor="let city of filteredCities">
+            {{ city.name }} - {{ city.country }} - {{city.country_code}}
           </ion-item>
       </ion-list>
     

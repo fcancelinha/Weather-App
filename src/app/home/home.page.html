@@ -1,31 +1,32 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button autoHide="false"></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Weather Project</ion-title>
+      <ion-row class="ion-text-center">
+        <ion-col>
+             
+            <ion-toolbar>
+          <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
+        </ion-toolbar>
+    
+          <ion-list *ngIf="this.filteredCities">
+              <ion-item button text-center (click)="searchWeather(city.name)" *ngFor="let city of filteredCities">
+                {{ city.name }} - {{ city.country }} - {{city.country_code}}
+              </ion-item>
+          </ion-list>
+        
+        </ion-col>
+      </ion-row>
+      <ion-title class="ion-text-center ion-margin-bottom">Weather Project</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!--- -->
+
+
+
+  <!-- --->
 
 <ion-content [fullscreen]="false" class="ion-padding">
   
-
-  <ion-row class="ion-text-center" style="z-index: 1000;">
-    <ion-col>
-         
-        <ion-toolbar>
-      <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
-    </ion-toolbar>
-
-      <ion-list *ngIf="this.filteredCities">
-          <ion-item button text-center (click)="searchWeather(city.name)" *ngFor="let city of filteredCities">
-            {{ city.name }} - {{ city.country }} - {{city.country_code}}
-          </ion-item>
-      </ion-list>
-    
-    </ion-col>
-  </ion-row>
 
   <div id="container">
        

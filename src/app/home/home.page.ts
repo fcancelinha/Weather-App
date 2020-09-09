@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
   
   
   public searchWeather(cityName: string){
+
     this.clearResult();
 
     const weatherSub: Subscription =  this.weatherApi.getWeather(cityName).pipe(finalize(() => {
@@ -36,12 +37,14 @@ export class HomePage implements OnInit {
         weatherSub.unsubscribe();
       }
     })).subscribe(data =>{
+      console.log(data);
       this.weatherData = data;
     })
     
   } 
 
   public getFilteredCities(city: string){
+
     this.clearResult();
     
     const filteredCities: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
@@ -50,13 +53,11 @@ export class HomePage implements OnInit {
       }
     })).subscribe( cities => {
 
-      for(let i = 0; i < cities["records"].length ; i++){
-          this.cities.push(new City(cities["records"][i]["fields"]["name"], 
-                                    cities["records"][i]["fields"]["country"], 
-                                    cities["records"][i]["fields"]["country_code"]))
-      }
-
+      console.log(cities);
+      this.cities.push(new City(cities["name"], cities["country"], cities["country_code"]))
+    
     })
+    
   
   }
 

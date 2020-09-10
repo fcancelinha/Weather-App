@@ -16,7 +16,7 @@ export class WeatherApiService {
   protected readonly urlForecast: string = 'https://api.openweathermap.org/data/2.5/onecall?';
   private readonly apiKey: string = 'ffd84008a9814acac878bda73f0cb7ec';
 
-constructor(private httpClient : HttpClient, private navigation: NavigationDataService) { }
+constructor(private httpClient : HttpClient) { }
 
 
 getWeatherNow(cityName: string, countryCode: string, metric: boolean): Observable<WeatherData>{

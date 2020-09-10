@@ -9,6 +9,7 @@ import { finalize } from 'rxjs/operators';
 import { Forecast } from './shared/models/Forecast';
 import { WeatherApiService } from './shared/services/weather-api.service';
 import { NavigationDataService } from './shared/services/navigation-data.service';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';  
 
 
 @Component({
@@ -20,6 +21,9 @@ import { NavigationDataService } from './shared/services/navigation-data.service
 
 
 export class AppComponent implements OnInit {
+
+
+  faPlusSquare = faPlusSquare;
 
   constructor(
 
@@ -93,6 +97,13 @@ export class AppComponent implements OnInit {
       );
 
   } 
+
+
+  public addToFav(cityName: string, country: string , countryCode: string){
+
+    this.navigation.favouriteCities.push(new City(cityName, country , countryCode));
+
+  }
 
 
 

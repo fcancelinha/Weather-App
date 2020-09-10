@@ -4,6 +4,7 @@ import { faTint } from '@fortawesome/free-solid-svg-icons';
 import { faWater } from '@fortawesome/free-solid-svg-icons';  
 import { faThermometerHalf } from '@fortawesome/free-solid-svg-icons';  
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -15,6 +16,7 @@ export class HomePage implements OnInit {
     faTint = faTint;
     faWater = faWater;
     faThermometerHalf = faThermometerHalf;
+  
 
   constructor(public navigation: NavigationDataService) {
     
@@ -22,7 +24,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {}
   
+  addToFavourites(){
 
+  }
 
 
 }

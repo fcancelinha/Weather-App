@@ -61,9 +61,9 @@ export class AppComponent implements OnInit {
 
   }
 
-  public searchWeather(cityName: string, countryCode: string): void{
+  public searchWeather(cityName: string, countryCode: string, metric: boolean): void{
 
-    const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode).pipe(finalize(() => {
+    const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode, metric).pipe(finalize(() => {
       if(weatherNowSub != null && !weatherNowSub.closed) {
         weatherNowSub.unsubscribe();
       };

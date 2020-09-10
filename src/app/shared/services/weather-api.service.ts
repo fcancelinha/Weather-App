@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { WeatherData } from '../models/WeatherData';
 import { Daily } from '../models/Daily';
 import { map } from 'rxjs/operators';
+import { NavigationDataService } from './navigation-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,14 @@ export class WeatherApiService {
   protected readonly urlForecast: string = 'https://api.openweathermap.org/data/2.5/onecall?';
   private readonly apiKey: string = 'ffd84008a9814acac878bda73f0cb7ec';
 
-constructor(private httpClient : HttpClient) { }
+constructor(private httpClient : HttpClient, private navigation: NavigationDataService) { }
 
 
-getWeatherNow(cityName: string, countryCode: string): Observable<WeatherData>{
+getWeatherNow(cityName: string, countryCode: string, metric: boolean): Observable<WeatherData>{
 
-  return this.httpClient.get<WeatherData>( this.urlNow + encodeURIComponent(cityName + "," + countryCode) + "&units=metric&appid=" + this.apiKey);
+  let unit = metric ? "metric" : "imperial";
+
+  return this.httpClient.get<WeatherData>( this.urlNow + encodeURIComponent(cityName + "," + countryCode) + "&units=" + encodeURIComponent(unit)  + "&appid=" + this.apiKey);
 }
 
 getWeatherForecast(latitude: number, longitude: number): Observable<Daily[]>{

@@ -13,6 +13,7 @@ export class NavigationDataService {
   weatherNow: WeatherData;
   weatherForecast: Forecast[] = [];
   filteredCities: City[] = [];
+  metric: boolean;
 
 
 

@@ -8,7 +8,11 @@
           
           <ion-row class="justify-content-center text-center">
             <ion-title>Weather Project</ion-title>
-            <ion-toggle color="danger"></ion-toggle>
+            
+            <ion-item>
+              <ion-label> F° / C°</ion-label>
+              <ion-toggle [(ngModel)]="this.navigation.metric" color="primary" checked></ion-toggle>
+            </ion-item>
           </ion-row>
        
           <ion-buttons slot="start">
@@ -55,9 +59,27 @@
         </ion-row>
 
         <ion-row>
+
+          <ion-col size="4">
+            <ion-label>Pressure</ion-label>
+          </ion-col>
+
+          <ion-col size="4">
+            <ion-label>Humidity</ion-label>
+          </ion-col>
+
+          <ion-col size="4">
+            <ion-label>Speed</ion-label>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+         
           <ion-col size="4"><fa-icon [icon]="faThermometerHalf"></fa-icon>    {{this.navigation.weatherNow.main.pressure}}</ion-col>
           <ion-col size="4"><fa-icon [icon]="faTint"></fa-icon>   {{this.navigation.weatherNow.main.humidity}}</ion-col>
           <ion-col size="4"><fa-icon [icon]="faWater"></fa-icon>   {{this.navigation.weatherNow.wind.speed}}   </ion-col>
+
         </ion-row>
         
         <ion-row>

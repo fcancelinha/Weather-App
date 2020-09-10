@@ -65,9 +65,9 @@ export class AppComponent implements OnInit {
 
   }
 
-  public searchWeather(cityName: string, countryCode: string, metric: boolean): void{
+  public searchWeather(cityName: string, countryCode: string): void{
 
-    const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode, metric).pipe(finalize(() => {
+    const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode).pipe(finalize(() => {
       if(weatherNowSub != null && !weatherNowSub.closed) {
         weatherNowSub.unsubscribe();
       };
@@ -98,13 +98,15 @@ export class AppComponent implements OnInit {
 
   } 
 
+  public addToFav(cityName: string, country: string , countryCode: string): void{
 
-  public addToFav(cityName: string, country: string , countryCode: string){
-
-    this.navigation.favouriteCities.push(new City(cityName, country , countryCode));
-
+    if(this.navigation.favouriteCities.every(city => city.name != cityName))
+      this.navigation.favouriteCities.push(new City(cityName, country , countryCode));
   }
 
+  public removeFromFav(cityName: string): void{
+    this.navigation.favouriteCities.splice(this.navigation.favouriteCities.findIndex(city => city.name == cityName), 1);
+  }
 
 
 

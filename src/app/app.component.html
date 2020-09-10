@@ -2,32 +2,47 @@
 
   <ion-menu side="start" menuId="first" contentId="main">
 
-      <ion-toolbar>
-        <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
-      </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)" placeholder="Search a city..."></ion-searchbar>
+    </ion-toolbar>
 
     <ion-content>
-        <ion-list *ngIf="this.navigation.filteredCities">
-            <ion-item button class="text-center" (click)="searchWeather(city.name, city.country_code, this.navigation.metric)"  *ngFor="let city of this.navigation.filteredCities">
+      <ion-list *ngIf="this.navigation.filteredCities">
+        <ion-item button class="text-center"(click)="searchWeather(city.name, city.country_code, this.navigation.metric)" *ngFor="let city of this.navigation.filteredCities">
+          
+          <ion-col size="10">
+            <ion-label>
               {{ city.name }} , {{ city.country }}
-              <ion-button (click)="addToFav(city.name, city.country ,city.country_code)"> + </ion-button>
-            </ion-item>
-        </ion-list>
+            </ion-label>
+          </ion-col>
+
+          <ion-col size="2" class="ion-justify-content-end ion-text-end">
+            <ion-button color="primary" (click)="addToFav(city.name, city.country ,city.country_code)"> + </ion-button>
+          </ion-col>
+
+        </ion-item>
+      </ion-list>
 
     </ion-content>
 
-    <ion-footer class="text-center">
-      <ion-item button class="text-center" color="secondary" lines="full" (click)="searchWeather(city.name, city.country_code, this.navigation.metric)"  *ngFor="let city of this.navigation.favouriteCities">
+    <ion-footer class="text-center" *ngIf="this.navigation.favouriteCities">
+      <ion-item button class="text-center" color="secondary" lines="full"(click)="searchWeather(city.name, city.country_code, this.navigation.metric)" *ngFor="let city of this.navigation.favouriteCities">
+        
+        <ion-col size="10">
           <ion-label>
             {{city.name}}, {{city.country}}
           </ion-label>
+        </ion-col>
+
+        <ion-col size="2" class="ion-justify-content-end ion-text-end">
+          <ion-button color="danger" (click)="removeFromFav(city.name)"> - </ion-button>
+        </ion-col>
+
       </ion-item>
     </ion-footer>
 
   </ion-menu>
 
-
   <ion-router-outlet id="main"></ion-router-outlet>
 
 </ion-app>
-<!--  -->

@@ -16,19 +16,22 @@ export class WeatherApiService {
   protected readonly urlForecast: string = 'https://api.openweathermap.org/data/2.5/onecall?';
   private readonly apiKey: string = 'ffd84008a9814acac878bda73f0cb7ec';
 
-constructor(private httpClient : HttpClient) { }
+constructor(private httpClient : HttpClient, private navigate: NavigationDataService) { 
 
+}
 
-getWeatherNow(cityName: string, countryCode: string, metric: boolean): Observable<WeatherData>{
+getUnit(): string{
+  return this.navigate.metric ? "metric" : "imperial";
+}
 
-  let unit = metric ? "metric" : "imperial";
+getWeatherNow(cityName: string, countryCode: string): Observable<WeatherData>{
 
-  return this.httpClient.get<WeatherData>( this.urlNow + encodeURIComponent(cityName + "," + countryCode) + "&units=" + encodeURIComponent(unit)  + "&appid=" + this.apiKey);
+  return this.httpClient.get<WeatherData>( this.urlNow + encodeURIComponent(cityName + "," + countryCode) + "&units=" + encodeURIComponent(this.getUnit())  + "&appid=" + this.apiKey);
 }
 
 getWeatherForecast(latitude: number, longitude: number): Observable<Daily[]>{
 
-  return this.httpClient.get<{daily: Daily[]}>( this.urlForecast + "lat=" + encodeURIComponent(latitude) + "&lon="+ encodeURIComponent(longitude) + "&exclude=current,hourly,minutely&units=metric&appid=" + this.apiKey)
+  return this.httpClient.get<{daily: Daily[]}>( this.urlForecast + "lat=" + encodeURIComponent(latitude) + "&lon="+ encodeURIComponent(longitude) + "&exclude=current,hourly,minutely&units="+ encodeURIComponent(this.getUnit())  + "&appid=" + this.apiKey)
   .pipe(
     map(data => data && data.daily));
 }

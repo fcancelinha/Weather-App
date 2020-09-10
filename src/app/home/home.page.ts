@@ -18,15 +18,10 @@ export class HomePage implements OnInit {
     faThermometerHalf = faThermometerHalf;
   
 
-  constructor(public navigation: NavigationDataService) {
-    
-  }
+  constructor(public navigation: NavigationDataService) {}
 
   ngOnInit() {}
   
-  addToFavourites(){
-
-  }
 
 
 }

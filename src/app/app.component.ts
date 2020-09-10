@@ -10,6 +10,7 @@ import { Forecast } from './shared/models/Forecast';
 import { WeatherApiService } from './shared/services/weather-api.service';
 import { NavigationDataService } from './shared/services/navigation-data.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -76,6 +77,8 @@ export class AppComponent implements OnInit {
 
 
   private searchForecastWeather(lat: number, lon: number): void{
+
+    this.navigation.weatherForecast = [];
 
     const weatherNowSub: Subscription = this.weatherApi.getWeatherForecast(lat, lon).pipe(finalize(() => {
       if(weatherNowSub != null && !weatherNowSub.closed) {

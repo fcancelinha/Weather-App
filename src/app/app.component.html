@@ -1,3 +1,22 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+
+  <ion-menu side="start" menuId="first" contentId="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-searchbar type="text" showCancelButton searchIcon="search" debounce="300" animated cancel-button-icon (ionChange)="getFilteredCities($event.target.value)"  placeholder="Search a city..."></ion-searchbar> 
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list *ngIf="this.filteredCities">
+            <ion-item button text-center (click)="searchWeather(city.name)" *ngFor="let city of filteredCities">
+              {{ city.name }} - {{ city.country }} - {{city.country_code}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
+
+
 </ion-app>

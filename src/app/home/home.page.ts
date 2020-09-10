@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherApiService } from '../shared/services/weather-api.service';
 import { finalize} from 'rxjs/operators'
 import { Subscription} from 'rxjs';
-import { CityApiService } from '../shared/services/city-api.service';
-import { City } from '../shared/models/City';
 import { WeatherData } from '../shared/models/WeatherData';
 import { Forecast } from '../shared/models/Forecast';
-
+import { City } from '../shared/models/City';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +14,15 @@ import { Forecast } from '../shared/models/Forecast';
 
 export class HomePage implements OnInit {
 
-  filteredCities: City[] = [];
-  weatherNow: WeatherData;
-  weatherForecast: Forecast[] = [];
-
-  constructor(private weatherApi: WeatherApiService, private cityApi: CityApiService ) {}
+  constructor(private weatherApi: WeatherApiService) {
+    
+  }
 
   ngOnInit() {}
   
+  filtered : City[];
+  weatherNow: WeatherData;
+  weatherForecast: Forecast[] = [];
 
   public searchWeather(cityName: string, countryCode: string): void{
 
@@ -55,35 +54,6 @@ export class HomePage implements OnInit {
       );
 
   } 
-
-
-  public getFilteredCities(city: string): void{
-
-    this.filteredCities = []; 
-    
-    const cityFilter: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
-      if(cityFilter != null && !cityFilter.closed) {
-        cityFilter.unsubscribe();
-      };
-    })).subscribe(cities => {
-      cities.forEach(x => {
-          this.filteredCities.push(new City(x.name, x.country, x.country_code))
-      }
-    )});
-    
-  
-  }
-
-
-
-
-
-
-
-
- 
-
-  
 
 
 

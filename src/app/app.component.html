@@ -1,6 +1,5 @@
 <ion-app>
 
-
   <ion-menu side="start" menuId="first" contentId="main">
     <ion-header>
       <ion-toolbar>
@@ -8,8 +7,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-        <ion-list *ngIf="this.filteredCities">
-            <ion-item button text-center (click)="searchWeather(city.name)" *ngFor="let city of filteredCities">
+        <ion-list *ngIf="this.navigation.filteredCities">
+            <ion-item button text-center (click)="searchWeather(city.name)"  *ngFor="let city of this.navigation.filteredCities">
               {{ city.name }} - {{ city.country }} - {{city.country_code}}
             </ion-item>
         </ion-list>
@@ -18,5 +17,5 @@
 
   <ion-router-outlet id="main"></ion-router-outlet>
 
-
 </ion-app>
+<!--  -->

@@ -4,9 +4,9 @@
       
       <ion-row class="ion-text-center">
      
-          <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
           </ion-buttons>
         </ion-toolbar>
         
@@ -34,29 +34,29 @@
 
   <div id="container">
        
-    <ion-card size="3" *ngIf="weatherNow">
+    <ion-card size="3" *ngIf="this.navigation.weatherNow">
 
         <ion-row>
           <ion-col>
-            <img width="110" src="http://openweathermap.org/img/wn/{{weatherNow.weather[0].icon}}@2x.png">
+            <img width="110" src="http://openweathermap.org/img/wn/{{this.navigation.weatherNow.weather[0].icon}}@2x.png">
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <h1 text-center>{{weatherNow.name}}, {{weatherNow.sys.country}}  </h1>
+            <h1 text-center>{{this.navigation.weatherNow.name}}, {{this.navigation.weatherNow.sys.country}}  </h1>
           </ion-col>
         </ion-row>
   
         <ion-row>
           <ion-col>
-            <h1>{{weatherNow.weather[0].description}}</h1>
+            <h1>{{this.navigation.weatherNow.weather[0].description}}</h1>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col>
-            <h1>{{weatherNow.main.temp}}°</h1>
+            <h1>{{this.navigation.weatherNow.main.temp}}°</h1>
           </ion-col>
         </ion-row>
         
@@ -71,26 +71,26 @@
   
         <ion-row>
           <ion-col>
-            <h1>{{weatherNow.main.temp_min}} °</h1>
+            <h1>{{this.navigation.weatherNow.main.temp_min}} °</h1>
           </ion-col>
           <ion-col>
-            <h1>{{weatherNow.main.temp_max}} °</h1>
+            <h1>{{this.navigation.weatherNow.main.temp_max}} °</h1>
           </ion-col>
         </ion-row>
   
     </ion-card>
 
   </div>
-
   
   
 </ion-content>
 
+
 <ion-footer class="ion-text-center">
   <ion-toolbar>
     <ion-grid>
-      <ion-row *ngIf="weatherForecast">
-        <ion-col *ngFor="let forecast of weatherForecast">
+      <ion-row *ngIf="this.navigation.weatherForecast">
+        <ion-col *ngFor="let forecast of this.navigation.weatherForecast">
           {{forecast.day}}
           <img width="110" src="http://openweathermap.org/img/wn/{{forecast.icon}}@2x.png">
             {{forecast.temp}}°       
@@ -100,3 +100,4 @@
     </ion-grid>
   </ion-toolbar>
 </ion-footer>
+

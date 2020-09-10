@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CityApiService } from './shared/services/city-api.service';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -6,9 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { City } from './shared/models/City';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { WeatherData } from './shared/models/WeatherData';
 import { Forecast } from './shared/models/Forecast';
 import { WeatherApiService } from './shared/services/weather-api.service';
+import { NavigationDataService } from './shared/services/navigation-data.service';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +18,22 @@ import { WeatherApiService } from './shared/services/weather-api.service';
 
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(
+
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private cityApi: CityApiService,
+    private weatherApi: WeatherApiService,
+    public navigation: NavigationDataService
       
   ) {
     this.initializeApp();
+  }
+  ngOnInit(): void {
+    
   }
 
   initializeApp() {
@@ -38,10 +44,9 @@ export class AppComponent {
   }
 
 
-  filteredCities: City[] = [];
-  public getFilteredCities(city: string): City[]{
+  public getFilteredCities(city: string): void{
 
-    this.filteredCities = []; 
+    this.navigation.filteredCities = []; 
     
     const cityFilter: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
       if(cityFilter != null && !cityFilter.closed) {
@@ -49,14 +54,43 @@ export class AppComponent {
       };
     })).subscribe(cities => {
       cities.forEach(x => {
-          this.filteredCities.push(new City(x.name, x.country, x.country_code));
+          this.navigation.filteredCities.push(new City(x.name, x.country, x.country_code));
       }   
     )});
-    
-      return this.filteredCities;
+
   }
 
-  let
+  public searchWeather(cityName: string, countryCode: string): void{
+
+    const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode).pipe(finalize(() => {
+      if(weatherNowSub != null && !weatherNowSub.closed) {
+        weatherNowSub.unsubscribe();
+      };
+    })).subscribe(
+       weatherService =>{
+        this.navigation.weatherNow = weatherService;
+          this.searchForecastWeather(this.navigation.weatherNow.coord.lat, this.navigation.weatherNow.coord.lon);
+       }
+    );
+  } 
+
+
+  private searchForecastWeather(lat: number, lon: number): void{
+
+    const weatherNowSub: Subscription = this.weatherApi.getWeatherForecast(lat, lon).pipe(finalize(() => {
+      if(weatherNowSub != null && !weatherNowSub.closed) {
+        weatherNowSub.unsubscribe();
+      };
+    })).subscribe(
+      weatherService => {
+            weatherService.slice(1).forEach(day => {
+              this.navigation.weatherForecast.push(new Forecast(day.dt, day.weather[0].icon, day.temp.day))
+          });
+        }
+      );
+
+  } 
+
 
 
 

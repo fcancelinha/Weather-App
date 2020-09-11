@@ -18,11 +18,9 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['app.component.scss']
 })
 
-
-
 export class AppComponent implements OnInit {
 
-
+  //FontAwesome Icon, just aesthetic.
   faPlusSquare = faPlusSquare;
 
   constructor(
@@ -49,9 +47,14 @@ export class AppComponent implements OnInit {
   }
 
 
+  /**
+   * Creates an array of Cities which contain the city name, country and country code
+     this is in turn used to give the user a ful list of cities that contain that search term
+   * @param city search query from the search bar
+   */
   public getFilteredCities(city: string): void{
 
-    this.navigation.filteredCities = []; 
+    this.navigation.filteredCities = [];
     
     const cityFilter: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
       if(cityFilter != null && !cityFilter.closed) {
@@ -65,6 +68,11 @@ export class AppComponent implements OnInit {
 
   }
 
+  /**
+   * Creates an object with the current weather data and triggers the forecast method passing as parameters the latitude and longitude
+   * @param cityName 
+   * @param countryCode 
+   */
   public searchWeather(cityName: string, countryCode: string): void{
 
     const weatherNowSub: Subscription = this.weatherApi.getWeatherNow(cityName, countryCode).pipe(finalize(() => {
@@ -79,7 +87,13 @@ export class AppComponent implements OnInit {
     );
   } 
 
-
+  /**
+   * Gets the 7-day forecast for the selected city and creates and array with an object of type Forecast
+     with the information we're looking for. Inside the Forecast class constructor the (dt)timestamp is treated
+     with new Date().tolocalstring method and the (temp) with toFixed(). Refer to the Forecast mdoel
+   * @param lat latitude
+   * @param lon longitude
+   */
   private searchForecastWeather(lat: number, lon: number): void{
 
     this.navigation.weatherForecast = [];
@@ -98,12 +112,22 @@ export class AppComponent implements OnInit {
 
   } 
 
+  /**
+   * Adds a city to a list of favourite cities if it doesn't already contain it
+   * @param cityName 
+   * @param country 
+   * @param countryCode 
+   */
   public addToFav(cityName: string, country: string , countryCode: string): void{
 
     if(this.navigation.favouriteCities.every(city => city.name != cityName))
       this.navigation.favouriteCities.push(new City(cityName, country , countryCode));
   }
 
+  /**
+   * deletes a city from the favourite's list.
+   * @param cityName 
+   */
   public removeFromFav(cityName: string): void{
     this.navigation.favouriteCities.splice(this.navigation.favouriteCities.findIndex(city => city.name == cityName), 1);
   }

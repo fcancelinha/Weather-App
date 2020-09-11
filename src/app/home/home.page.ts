@@ -13,11 +13,11 @@ import { faThermometerHalf } from '@fortawesome/free-solid-svg-icons';
 
 export class HomePage implements OnInit {
 
+    //FontAwesome Icons, just aesthetic.
     faTint = faTint;
     faWater = faWater;
     faThermometerHalf = faThermometerHalf;
   
-
   constructor(public navigation: NavigationDataService) {}
 
   ngOnInit() {}

@@ -10,6 +10,10 @@ export class NavigationDataService {
 
   constructor() { }
 
+  /**
+    This service is only being used as a way to route data between components that share the service.
+   */
+
   weatherNow: WeatherData;
   weatherForecast: Forecast[] = [];
   filteredCities: City[] = [];

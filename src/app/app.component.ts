@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Forecast } from './shared/models/Forecast';
 import { WeatherApiService } from './shared/services/weather-api.service';
-import { NavigationDataService } from './shared/services/navigation-data.service';
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';  
+import { NavigationDataService } from './shared/services/navigation-data.service'; 
+import { faStar } from '@fortawesome/free-solid-svg-icons';  
 
 
 @Component({
@@ -20,8 +20,7 @@ import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 export class AppComponent implements OnInit {
 
-  //FontAwesome Icon, just aesthetic.
-  faPlusSquare = faPlusSquare;
+  faStar = faStar;
 
   constructor(
 
@@ -52,20 +51,22 @@ export class AppComponent implements OnInit {
      this is in turn used to give the user a ful list of cities that contain that search term
    * @param city search query from the search bar
    */
-  public getFilteredCities(city: string): void{
+  public getFilteredCities(city: string): void {
 
     this.navigation.filteredCities = [];
-    
-    const cityFilter: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
-      if(cityFilter != null && !cityFilter.closed) {
-        cityFilter.unsubscribe();
-      };
-    })).subscribe(cities => {
-      cities.forEach(x => {
-          this.navigation.filteredCities.push(new City(x.name, x.country, x.country_code));
-      }   
-    )});
 
+    if (city.length > 1) {
+      const cityFilter: Subscription = this.cityApi.getCityList(city).pipe(finalize(() => {
+        if (cityFilter != null && !cityFilter.closed) {
+          cityFilter.unsubscribe();
+        };
+      })).subscribe(cities => {
+        cities.forEach(x => {
+          this.navigation.filteredCities.push(new City(x.name, x.country, x.country_code));
+        }
+        )
+      });
+    }
   }
 
   /**

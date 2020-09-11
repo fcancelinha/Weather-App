@@ -49,13 +49,13 @@
 
       <ion-row>
         <ion-col>
-          <h4>{{this.navigation.weatherNow.weather[0].description}}</h4>
+          <h2><b>{{this.navigation.weatherNow.weather[0].description}}</b></h2>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <h2>{{this.navigation.weatherNow.main.temp.toFixed()}}°</h2>
+          <h1>{{this.navigation.weatherNow.main.temp.toFixed()}}°</h1>
         </ion-col>
       </ion-row>
 
@@ -91,33 +91,44 @@
 
       <ion-row>
         <ion-col>
-          <h5>MIN: </h5>
+          <h3>MIN: </h3>
         </ion-col>
         <ion-col>
-          <h5>MAX: </h5>
+          <h3>MAX: </h3>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <h4>{{this.navigation.weatherNow.main.temp_min.toFixed()}} °</h4>
+          <h2>{{this.navigation.weatherNow.main.temp_min.toFixed()}} °</h2>
         </ion-col>
         <ion-col>
-          <h4>{{this.navigation.weatherNow.main.temp_max.toFixed()}} °</h4>
+          <h2>{{this.navigation.weatherNow.main.temp_max.toFixed()}} °</h2>
         </ion-col>
-      </ion-row>
+      </ion-row>  
 
-      <ion-row *ngIf="this.navigation.weatherForecast">
+    
+      <ion-grid>
+      <ion-row *ngIf="this.navigation.weatherForecast" class="ion-align-items-center ion-justify-content-center">
         <ion-col *ngFor="let forecast of this.navigation.weatherForecast">
-          {{forecast.day}}
-          <img width="110" src="http://openweathermap.org/img/wn/{{forecast.icon}}@2x.png">
-          {{forecast.temp}}°
+
+          <ion-col>
+             {{forecast.day}}
+          </ion-col>
+
+          <ion-col>
+            <img width="90" src="http://openweathermap.org/img/wn/{{forecast.icon}}@2x.png">
+          </ion-col>
+
+          <ion-col>
+            {{forecast.temp}}°
+          </ion-col>
 
         </ion-col>
       </ion-row>
+    </ion-grid>
 
     </ion-card>
-
   </div>
 
 

@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
       })).subscribe(cities => {
         cities.forEach(x => {
           this.navigation.filteredCities.push(new City(x.name, x.country, x.country_code));
-        }
+          }
         )
       });
     }
